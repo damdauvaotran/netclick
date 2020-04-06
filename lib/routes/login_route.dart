@@ -86,12 +86,7 @@ class LoginFormState extends State<LoginForm> {
               ),
               fillColor: Colors.grey[700],
               filled: true,
-              border: OutlineInputBorder(
-                  borderSide: BorderSide(width: 0.0, color: Colors.grey[700])),
-              focusedBorder:
-                  OutlineInputBorder(borderSide: BorderSide(width: 0.0)),
-              enabledBorder:
-                  OutlineInputBorder(borderSide: BorderSide(width: 0.0)),
+
             ),
           ),
         ),
@@ -101,6 +96,7 @@ class LoginFormState extends State<LoginForm> {
             onTap: _requestPasswordFocus,
             focusNode: _passwordFocusNode,
             controller: _passwordController,
+            obscureText: true,
             decoration: InputDecoration(
               labelText: 'Password',
               labelStyle: TextStyle(
@@ -110,11 +106,6 @@ class LoginFormState extends State<LoginForm> {
               ),
               fillColor: Colors.grey[700],
               filled: true,
-              border: OutlineInputBorder(borderSide: BorderSide(width: 0.0)),
-              focusedBorder:
-                  OutlineInputBorder(borderSide: BorderSide(width: 0.0)),
-              enabledBorder:
-                  OutlineInputBorder(borderSide: BorderSide(width: 0.0)),
             ),
           ),
         ),

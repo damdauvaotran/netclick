@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:netclick/routes/login_route.dart';
 
-Future<void> main() async{
+Future<void> main() async {
   runApp(MyApp());
 }
 
@@ -26,8 +26,16 @@ class MyApp extends StatelessWidget {
         ),
         backgroundColor: Colors.grey[850],
         brightness: Brightness.dark,
-        hintColor: Colors.grey[850],
-        focusColor: Colors.grey[700]
+        hintColor: Colors.grey[400],
+        focusColor: Colors.grey[400],
+        inputDecorationTheme: InputDecorationTheme(
+          focusColor: Colors.grey[400],
+          labelStyle: TextStyle(
+            color: Colors.white,
+          ),
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none
+        ),
       ),
       initialRoute: '/',
       routes: {
@@ -37,14 +45,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class LoginInfo extends InheritedWidget {
+  LoginInfo({Widget child}) : super(child: child);
 
-class LoginInfo extends InheritedWidget{
-
-  LoginInfo({Widget child}): super(child: child);
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {
     // TODO: implement updateShouldNotify
     return null;
   }
-
 }

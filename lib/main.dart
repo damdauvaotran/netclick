@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:netclick/routes/login_route.dart';
 
-void main() => runApp(MyApp());
+Future<void> main() async{
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -19,7 +21,13 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        appBarTheme: AppBarTheme(
+          color: Colors.grey[850],
+        ),
+        backgroundColor: Colors.grey[850],
+        brightness: Brightness.dark,
+        hintColor: Colors.grey[850],
+        focusColor: Colors.grey[700]
       ),
       initialRoute: '/',
       routes: {

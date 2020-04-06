@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:netclick/routes/sign_up_route.dart';
 
-class LoginRoute extends StatelessWidget {
+class SignUpRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,21 +19,20 @@ class LoginRoute extends StatelessWidget {
       ),
       body: Container(
         color: Theme.of(context).backgroundColor,
-        child: LoginForm(),
+        child: SignUpPage(),
       ),
     );
   }
 }
 
-class LoginForm extends StatefulWidget {
+class SignUpPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return LoginFormState();
+    return SignUpPageState();
   }
 }
 
-class LoginFormState extends State<LoginForm> {
+class SignUpPageState extends State<SignUpPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   FocusNode _usernameFocusNode;
@@ -55,10 +53,7 @@ class LoginFormState extends State<LoginForm> {
 
   void _onLogin() {}
 
-  void _onSignUp() {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => SignUpRoute()));
-  }
+  void _onSignUp() {}
 
   void initState() {
     super.initState();
@@ -129,23 +124,6 @@ class LoginFormState extends State<LoginForm> {
                   ),
                 )),
             onPressed: _onLogin,
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
-          width: double.infinity,
-          child: GestureDetector(
-            onTap: _onSignUp,
-            child: Container(
-              margin: EdgeInsets.only(top: 30.0),
-              height: 45.0,
-              child: Center(
-                child: Text(
-                  'Need an account? Sign up now',
-                  style: TextStyle(fontSize: 16.0, color: Colors.grey[400]),
-                ),
-              ),
-            ),
           ),
         ),
       ],

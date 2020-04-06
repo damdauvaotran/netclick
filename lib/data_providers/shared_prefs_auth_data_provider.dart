@@ -2,35 +2,31 @@ import 'package:netclick/data_providers/auth_data_provider.dart';
 import 'package:netclick/models/user_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPrefsAuthDataProvider extends AuthDataProvider{
-  final SharedPreferences _prefs;
-  static const String  tokenKey = 'token';
-  static const String  userInfoKey = 'userInfo';
-  SharedPrefsAuthDataProvider(this._prefs)
-      : assert(_prefs != null);
+class SharedPrefsAuthDataProvider {
+  static SharedPreferences _prefs;
+  static const String tokenKey = 'token';
+  static const String userInfoKey = 'userInfo';
 
-
-
-  static Future<SharedPrefsAuthDataProvider> load() async {
-    return SharedPrefsAuthDataProvider(await SharedPreferences.getInstance());
+  static Future<void> load() async {
+    _prefs = await SharedPreferences.getInstance();
   }
 
-  @override
-  String getToken() {
+  static bool hasToken() {
+    final token = getToken();
+    return token != '' && token != null;
+  }
+
+  static String getToken() {
     return _prefs.getString(tokenKey);
   }
 
-  @override
-  UserInfo getUserInfo() {
+  static UserInfo getUserInfo() {
     return null;
   }
 
-  @override
-  void setToken(String token) {
-   _prefs.setString(tokenKey, token);
+  static void setToken(String token) {
+    _prefs.setString(tokenKey, token);
   }
 
-  @override
-  void setUserInfo(UserInfo info) {
-  }
+  static void setUserInfo(UserInfo info) {}
 }

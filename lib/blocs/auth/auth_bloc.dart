@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netclick/api/repo/user_repository.dart';
+import 'package:netclick/api/repo/auth_repository.dart';
 
 import 'package:netclick/blocs/auth/auth_event.dart';
 import 'package:netclick/data_providers/auth_data_provider.dart';

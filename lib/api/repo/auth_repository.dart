@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:equatable/equatable.dart';
+import 'package:netclick/api/common.dart';
 
 class UserRepository {
-  static Future<String> authenticate({
+  static Future<String> login({
     @required String username,
     @required String password,
   }) async {
-    await Future.delayed(Duration(seconds: 1));
-    return 'token';
+    Map<String, dynamic> data = await post(
+        url: '/auth/login', body: {'username': username, 'password': password});
+    final token = data['token'];
+    return token;
   }
 
   static Future<void> deleteToken() async {
@@ -29,5 +32,3 @@ class UserRepository {
     return false;
   }
 }
-
-

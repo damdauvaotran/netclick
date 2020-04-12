@@ -129,7 +129,7 @@ packages:
     source: hosted
     version: "0.12.6"
   meta:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: meta
       url: "https://pub.dartlang.org"
@@ -169,7 +169,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.4"
+    version: "4.0.5"
   quiver:
     dependency: transitive
     description:

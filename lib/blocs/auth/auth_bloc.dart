@@ -25,13 +25,13 @@ class AuthenticationBloc
     }
     if (event is LoggedIn) {
       yield AuthenticationLoading();
-      await UserRepository.persistToken(event.token);
+       SharedPrefsAuthDataProvider.setToken(event.token);
       yield AuthenticationAuthenticated();
     }
 
     if (event is LoggedOut) {
       yield AuthenticationLoading();
-      await UserRepository.deleteToken();
+       SharedPrefsAuthDataProvider.deleteToken();
       yield AuthenticationUnauthenticated();
     }
   }

@@ -19,6 +19,9 @@ class SharedPrefsAuthDataProvider {
   static String getToken() {
     return _prefs.getString(tokenKey);
   }
+  static void deleteToken() {
+    return setToken('');
+  }
 
   static UserInfo getUserInfo() {
     return null;

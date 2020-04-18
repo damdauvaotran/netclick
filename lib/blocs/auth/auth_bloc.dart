@@ -23,15 +23,16 @@ class AuthenticationBloc
         yield AuthenticationUnauthenticated();
       }
     }
+
     if (event is LoggedIn) {
       yield AuthenticationLoading();
-       SharedPrefsAuthDataProvider.setToken(event.token);
+      SharedPrefsAuthDataProvider.setToken(event.token);
       yield AuthenticationAuthenticated();
     }
 
     if (event is LoggedOut) {
       yield AuthenticationLoading();
-       SharedPrefsAuthDataProvider.deleteToken();
+      SharedPrefsAuthDataProvider.deleteToken();
       yield AuthenticationUnauthenticated();
     }
   }

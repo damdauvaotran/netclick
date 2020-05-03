@@ -19,11 +19,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     if (event is SignUpButtonPressed) {
       yield SignUpLoading();
       try {
-        final Map<String, dynamic> response = await UserRepository.signUp(
+        await UserRepository.signUp(
             username: event.username, password: event.password);
-        if (response['success']){
-          authenticationBloc.add(LoggedOut());
-        }
+        authenticationBloc.add(LoggedOut());
       } catch (error) {
         yield SignUpFailure(error: error.toString());
       }

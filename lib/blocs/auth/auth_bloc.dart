@@ -32,6 +32,7 @@ class AuthenticationBloc
 
     if (event is LoggedOut) {
       yield AuthenticationLoading();
+      print('logged out');
       SharedPrefsAuthDataProvider.deleteToken();
       yield AuthenticationUnauthenticated();
     }

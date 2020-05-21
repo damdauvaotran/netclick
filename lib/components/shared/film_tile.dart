@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'detail_page.dart';
+import '../../routes/detail_route.dart';
 
 class FilmTile extends StatefulWidget {
   final AssetImage image;
@@ -21,7 +21,7 @@ class FilmTileState extends State<FilmTile> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DetailsPage(data: widget.filmData)),
+            MaterialPageRoute(builder: (context) => DetailsRoute(data: widget.filmData)),
           );
         },
         child: Container(

@@ -3,6 +3,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:netclick/models/app_state.dart';
 import 'package:netclick/redux/reducer.dart';
 import 'package:netclick/routes/home_page_route.dart';
+import 'package:netclick/routes/sign_up_route.dart';
+import 'package:netclick/routes/watch_route.dart';
 import 'package:redux/redux.dart';
 
 import 'package:netclick/routes/login_route.dart';
@@ -49,7 +51,9 @@ class MyApp extends StatelessWidget {
       initialRoute: initialPage,
       routes: {
         '/': (context) => HomePage(),
-        '/login': (context) => LoginRoute()
+        '/login': (context) => LoginRoute(),
+        '/sign-up': (context) => SignUpRoute(),
+        '/watch': (context) => WatchRoute(),
       },
       // home: LoginRoute());
     );

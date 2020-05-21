@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:netclick/routes/detail_route.dart';
 import 'package:netclick/components/shared/film_tile.dart';
 import 'package:netclick/models/app_state.dart';
 import 'package:netclick/redux/actions.dart';

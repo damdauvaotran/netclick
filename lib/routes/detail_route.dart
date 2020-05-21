@@ -151,76 +151,76 @@ class DetailsRoute extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 10.0),
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  width: double.infinity,
-                  height: 80,
-                  child: Row(
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.done, color: Colors.white),
-                            onPressed: () {},
-                          ),
-                          Text(
-                            'My List',
-                            style:
-                            TextStyle(color: Colors.white30, fontSize: 10),
-                          )
-                        ],
-                      ),
-                      SizedBox(width: 40),
-                      Column(
-                        children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.thumb_up, color: Colors.white),
-                            onPressed: () {},
-                          ),
-                          Text(
-                            'Rate',
-                            style:
-                            TextStyle(color: Colors.white30, fontSize: 10),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        width: 40,
-                      ),
-                      Column(
-                        children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.share, color: Colors.white),
-                            onPressed: () {},
-                          ),
-                          Text(
-                            'Share',
-                            style:
-                            TextStyle(color: Colors.white30, fontSize: 10),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        width: 40,
-                      ),
-                      Column(
-                        children: <Widget>[
-                          IconButton(
-                            icon:
-                            Icon(Icons.file_download, color: Colors.white),
-                            onPressed: () {},
-                          ),
-                          Text(
-                            'Download',
-                            style:
-                            TextStyle(color: Colors.white30, fontSize: 10),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+//                Container(
+//                  margin: EdgeInsets.symmetric(vertical: 10.0),
+//                  padding: EdgeInsets.symmetric(horizontal: 20),
+//                  width: double.infinity,
+//                  height: 80,
+//                  child: Row(
+//                    children: <Widget>[
+//                      Column(
+//                        children: <Widget>[
+//                          IconButton(
+//                            icon: Icon(Icons.done, color: Colors.white),
+//                            onPressed: () {},
+//                          ),
+//                          Text(
+//                            'My List',
+//                            style:
+//                            TextStyle(color: Colors.white30, fontSize: 10),
+//                          )
+//                        ],
+//                      ),
+//                      SizedBox(width: 40),
+//                      Column(
+//                        children: <Widget>[
+//                          IconButton(
+//                            icon: Icon(Icons.thumb_up, color: Colors.white),
+//                            onPressed: () {},
+//                          ),
+//                          Text(
+//                            'Rate',
+//                            style:
+//                            TextStyle(color: Colors.white30, fontSize: 10),
+//                          )
+//                        ],
+//                      ),
+//                      SizedBox(
+//                        width: 40,
+//                      ),
+//                      Column(
+//                        children: <Widget>[
+//                          IconButton(
+//                            icon: Icon(Icons.share, color: Colors.white),
+//                            onPressed: () {},
+//                          ),
+//                          Text(
+//                            'Share',
+//                            style:
+//                            TextStyle(color: Colors.white30, fontSize: 10),
+//                          )
+//                        ],
+//                      ),
+//                      SizedBox(
+//                        width: 40,
+//                      ),
+//                      Column(
+//                        children: <Widget>[
+//                          IconButton(
+//                            icon:
+//                            Icon(Icons.file_download, color: Colors.white),
+//                            onPressed: () {},
+//                          ),
+//                          Text(
+//                            'Download',
+//                            style:
+//                            TextStyle(color: Colors.white30, fontSize: 10),
+//                          )
+//                        ],
+//                      ),
+//                    ],
+//                  ),
+//                ),
                 Divider(
                   color: Colors.black,
                   height: 1,
@@ -254,13 +254,13 @@ class DetailsRoute extends StatelessWidget {
                         )
                       ],
                     ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      'MORE LIKE THIS',
-                      style: TextStyle(fontSize: 15, color: Colors.white54),
-                    ),
+//                    SizedBox(
+//                      width: 20,
+//                    ),
+//                    Text(
+//                      'MORE LIKE THIS',
+//                      style: TextStyle(fontSize: 15, color: Colors.white54),
+//                    ),
                   ],
                 ),
                 SizedBox(

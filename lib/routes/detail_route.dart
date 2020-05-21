@@ -13,7 +13,10 @@ class DetailsRoute extends StatelessWidget {
       Navigator.of(context).pushNamed('/watch');
     }
 
-    double width = MediaQuery.of(context).size.width * 0.95;
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width * 0.95;
 
     return Scaffold(
       body: new Container(
@@ -24,11 +27,11 @@ class DetailsRoute extends StatelessWidget {
                 height: 240.0,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                  image: AssetImage(SeriesData().series[data]['thumbnail']),
-                  fit: BoxFit.cover,
-                  colorFilter:
+                      image: AssetImage(SeriesData().series[data]['thumbnail']),
+                      fit: BoxFit.cover,
+                      colorFilter:
                       ColorFilter.mode(Colors.black, BlendMode.softLight),
-                )),
+                    )),
                 width: double.infinity,
                 child: new BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
@@ -164,7 +167,7 @@ class DetailsRoute extends StatelessWidget {
                           Text(
                             'My List',
                             style:
-                                TextStyle(color: Colors.white30, fontSize: 10),
+                            TextStyle(color: Colors.white30, fontSize: 10),
                           )
                         ],
                       ),
@@ -178,7 +181,7 @@ class DetailsRoute extends StatelessWidget {
                           Text(
                             'Rate',
                             style:
-                                TextStyle(color: Colors.white30, fontSize: 10),
+                            TextStyle(color: Colors.white30, fontSize: 10),
                           )
                         ],
                       ),
@@ -194,7 +197,7 @@ class DetailsRoute extends StatelessWidget {
                           Text(
                             'Share',
                             style:
-                                TextStyle(color: Colors.white30, fontSize: 10),
+                            TextStyle(color: Colors.white30, fontSize: 10),
                           )
                         ],
                       ),
@@ -205,13 +208,13 @@ class DetailsRoute extends StatelessWidget {
                         children: <Widget>[
                           IconButton(
                             icon:
-                                Icon(Icons.file_download, color: Colors.white),
+                            Icon(Icons.file_download, color: Colors.white),
                             onPressed: () {},
                           ),
                           Text(
                             'Download',
                             style:
-                                TextStyle(color: Colors.white30, fontSize: 10),
+                            TextStyle(color: Colors.white30, fontSize: 10),
                           )
                         ],
                       ),
@@ -266,38 +269,38 @@ class DetailsRoute extends StatelessWidget {
                 ),
                 SeriesData().series[data]['movie'] == 'false'
                     ? FlatButton(
-                        onPressed: () {},
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey.withAlpha(100),
-                              borderRadius: BorderRadius.circular(5)),
-                          width: 120,
-                          height: 40,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                'Season 1',
-                                style: TextStyle(
-                                    fontSize: 15, color: Colors.white),
-                              ),
-                              Icon(
-                                Icons.arrow_drop_down,
-                                color: Colors.white,
-                              )
-                            ],
-                          ),
+                  onPressed: () {},
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey.withAlpha(100),
+                        borderRadius: BorderRadius.circular(5)),
+                    width: 120,
+                    height: 40,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Season 1',
+                          style: TextStyle(
+                              fontSize: 15, color: Colors.white),
                         ),
-                      )
+                        Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.white,
+                        )
+                      ],
+                    ),
+                  ),
+                )
                     : SizedBox(
-                        height: 10,
-                      ),
+                  height: 10,
+                ),
                 SizedBox(
                   height: 10,
                 ),
-                episodeBlock('1. The One With The Blackout'),
-                episodeBlock('2. The One Where Everyone Knows'),
-                episodeBlock('3. The one With Late Thanksgiving')
+                episodeBlock(context, '1. The One With The Blackout'),
+                episodeBlock(context, '2. The One Where Everyone Knows'),
+                episodeBlock(context, '3. The one With Late Thanksgiving')
               ],
             )
           ],
@@ -306,58 +309,64 @@ class DetailsRoute extends StatelessWidget {
     );
   }
 
-  Container episodeBlock(epTitle) {
+  Container episodeBlock(context, epTitle) {
+    _onPlayMovie() {
+      Navigator.of(context).pushNamed('/watch');
+    }
     return Container(
       height: 150,
       padding: EdgeInsets.all(10),
       child: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(
-                                SeriesData().series[data]['thumbnail'],
-                              ),
-                              fit: BoxFit.cover,
-                              colorFilter: ColorFilter.mode(
-                                  Colors.black, BlendMode.softLight))),
-                      width: 100,
-                      height: 60,
-                      child: Center(
-                        child: Icon(Icons.play_arrow,
-                            size: 35, color: Colors.white),
-                      )),
-                  SizedBox(
-                    height: 2,
-                    child: Container(width: 60, color: Colors.red),
-                  )
-                ],
-              ),
-              SizedBox(width: 10),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    epTitle,
-                    style: TextStyle(color: Colors.white, fontSize: 13),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    '54 min',
-                    style: TextStyle(color: Colors.white54, fontSize: 13),
-                  ),
-                ],
-              ),
-            ],
+          GestureDetector(
+            onTap: _onPlayMovie,
+            child: Row(
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage(
+                                  SeriesData().series[data]['thumbnail'],
+                                ),
+                                fit: BoxFit.cover,
+                                colorFilter: ColorFilter.mode(
+                                    Colors.black, BlendMode.softLight))),
+                        width: 100,
+                        height: 60,
+                        child: Center(
+                          child: Icon(Icons.play_arrow,
+                              size: 35, color: Colors.white),
+                        )),
+                    SizedBox(
+                      height: 2,
+                      child: Container(width: 60, color: Colors.red),
+                    )
+                  ],
+                ),
+                SizedBox(width: 10),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      epTitle,
+                      style: TextStyle(color: Colors.white, fontSize: 13),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      '54 min',
+                      style: TextStyle(color: Colors.white54, fontSize: 13),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 5),
           Flexible(

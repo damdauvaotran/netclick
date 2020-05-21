@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:netclick/components/shared/detail_page.dart';
 import 'package:netclick/components/shared/film_tile.dart';
+import 'package:netclick/models/app_state.dart';
+import 'package:netclick/redux/actions.dart';
 
 class HomepageRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Theme.of(context).backgroundColor,
+        color: Theme
+            .of(context)
+            .backgroundColor,
         child: HomePage(),
       ),
     );
@@ -32,6 +37,13 @@ class HomePageState extends State<HomePage>
 
     // Initialize the Tab Controller
     controller = new TabController(length: 3, vsync: this);
+  }
+
+  _onTapTabBar(int index) {
+    if (index == 2) {
+      StoreProvider.of<AppState>(context).dispatch(UpdateToken(token: ''));
+      Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+    }
   }
 
   @override
@@ -73,6 +85,7 @@ class HomePageState extends State<HomePage>
           ],
           //  Todo setup the controller
           controller: controller,
+          onTap: _onTapTabBar,
         ),
       ),
       body: new Container(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:netclick/api/repo/auth_repository.dart';
 
 class SignUpRoute extends StatelessWidget {
   @override
@@ -58,8 +59,13 @@ class SignUpPageState extends State<SignUpPage> {
     });
   }
 
-  void _onSignUp() {
-    if (_formKey.currentState.validate()) {}
+  Future<void> _onSignUp() async {
+    if (_formKey.currentState.validate()) {
+      final res = await UserRepository.signUp(
+          username: _usernameController.value.text,
+          password: _passwordController.value.text);
+      print(res['success']);
+    }
   }
 
   @override

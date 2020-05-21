@@ -22,16 +22,58 @@ class HomePage extends StatefulWidget {
   }
 }
 
-class HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  TabController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize the Tab Controller
+    controller = new TabController(length: 3, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black87,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.cast, color: Colors.white),
-        backgroundColor: Color.fromRGBO(105, 105, 105, 1),
-        tooltip: 'Cast to Screen',
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: () {},
+//        child: Icon(Icons.cast, color: Colors.white),
+//        backgroundColor: Color.fromRGBO(105, 105, 105, 1),
+//        tooltip: 'Casting',
+
+//      ),
+      bottomNavigationBar: new Material(
+        elevation: 1.0,
+        color: Colors.black87,
+        child: new TabBar(
+          labelPadding: EdgeInsets.symmetric(horizontal: 5.0),
+          indicatorColor: Colors.black,
+          tabs: <Tab>[
+            new Tab(
+              icon: new Icon(Icons.home),
+              child: Text('Home'),
+            ),
+            new Tab(
+              icon: new Icon(Icons.search),
+              child: Text('Search'),
+            ),
+//            new Tab(
+//              icon: new Icon(Icons.tv),
+//            ),
+//            new Tab(
+//              icon: new Icon(Icons.file_download),
+//            ),
+            new Tab(
+              icon: new Icon(Icons.power_settings_new),
+              child: Text('Logout'),
+            ),
+          ],
+          //  Todo setup the controller
+          controller: controller,
+        ),
       ),
       body: new Container(
         child: new ListView(
@@ -56,8 +98,14 @@ class HomePageState extends State<HomePage> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
-                  FilmTile(image: AssetImage('assets/images/ghoul.jpg')),
-                  FilmTile(image: AssetImage('assets/images/str2.jpg')),
+                  FilmTile(
+                    image: AssetImage('assets/images/ghoul.jpg'),
+                    filmData: 'Ghl',
+                  ),
+                  FilmTile(
+                    image: AssetImage('assets/images/alc.jpg'),
+                    filmData: 'Alc',
+                  ),
                 ],
               ),
             ),
@@ -81,47 +129,17 @@ class HomePageState extends State<HomePage> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DetailsPage(data: 'Ghl')),
-                      );
-                    },
-                    child: Container(
-                      child: Image.asset('assets/images/ghoul.jpg'),
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      width: 130.0,
-                    ),
+                  FilmTile(
+                    image: AssetImage('assets/images/ghoul.jpg'),
+                    filmData: 'Ghl',
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DetailsPage(data: 'Alc')),
-                      );
-                    },
-                    child: Container(
-                      child: Image.asset('assets/images/alc.jpg'),
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      width: 130.0,
-                    ),
+                  FilmTile(
+                    image: AssetImage('assets/images/alc.jpg'),
+                    filmData: 'Alc',
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DetailsPage(data: 'Hoc')),
-                      );
-                    },
-                    child: Container(
-                      child: Image.asset('assets/images/hox.jpg'),
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      width: 130.0,
-                    ),
+                  FilmTile(
+                    image: AssetImage('assets/images/hox.jpg'),
+                    filmData: 'Hoc',
                   ),
                 ],
               ),

@@ -55,7 +55,7 @@ class SignUpPageState extends State<SignUpPage> {
 
   void _requestRePasswordFocus() {
     setState(() {
-      FocusScope.of(context).requestFocus(_passwordFocusNode);
+      FocusScope.of(context).requestFocus(_rePasswordFocusNode);
     });
   }
 

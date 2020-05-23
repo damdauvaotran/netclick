@@ -36,16 +36,37 @@ class WatchRouteState extends State<WatchRoute> {
                 child: _controller.value.initialized
                     ? AspectRatio(
                         aspectRatio: _controller.value.aspectRatio,
-                        child: VideoPlayer(_controller),
+                        child: VideoPlayer(
+                          _controller,
+                        ),
                       )
                     : Container(),
               ),
               Positioned(
-                bottom: 0,
+                bottom: 10,
                 width: MediaQuery.of(context).size.height,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    IconButton(
+                      icon: Icon(
+                        Icons.fast_rewind,
+                        color: Colors.white,
+                        size: 50,
+                      ),
+                      onPressed: () {
+                        setState(
+                          () {
+                            _controller.seekTo(
+                              Duration(
+                                  milliseconds: _controller
+                                          .value.position.inMilliseconds -
+                                      5000),
+                            );
+                          },
+                        );
+                      },
+                    ),
                     IconButton(
                       icon: Icon(
                         _controller.value.isPlaying
@@ -61,10 +82,35 @@ class WatchRouteState extends State<WatchRoute> {
                               : _controller.play();
                         });
                       },
-                    )
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.fast_forward,
+                        color: Colors.white,
+                        size: 50,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _controller.seekTo(
+                            Duration(
+                                milliseconds:
+                                    _controller.value.position.inMilliseconds +
+                                        5000),
+                          );
+                        });
+                      },
+                    ),
                   ],
                 ),
               ),
+              Positioned(
+                  bottom: 55,
+                  width: MediaQuery.of(context).size.height,
+                  child: Center(
+                      child: Container(
+                          width: MediaQuery.of(context).size.height * 0.9,
+                          child: VideoProgressIndicator(_controller,
+                              allowScrubbing: true)))),
             ],
           ),
         ),

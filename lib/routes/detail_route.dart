@@ -13,10 +13,7 @@ class DetailsRoute extends StatelessWidget {
       Navigator.of(context).pushNamed('/watch');
     }
 
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width * 0.95;
+    double width = MediaQuery.of(context).size.width * 0.95;
 
     return Scaffold(
       body: new Container(
@@ -27,11 +24,11 @@ class DetailsRoute extends StatelessWidget {
                 height: 240.0,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(SeriesData().series[data]['thumbnail']),
-                      fit: BoxFit.cover,
-                      colorFilter:
+                  image: AssetImage(SeriesData().series[data]['thumbnail']),
+                  fit: BoxFit.cover,
+                  colorFilter:
                       ColorFilter.mode(Colors.black, BlendMode.softLight),
-                    )),
+                )),
                 width: double.infinity,
                 child: new BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
@@ -47,9 +44,7 @@ class DetailsRoute extends StatelessWidget {
                           },
                         ),
                       ),
-                      Positioned(
-                        left: 120.0,
-                        top: 60,
+                      Center(
                         child: GestureDetector(
                           onTap: _onPlayMovie,
                           child: Icon(Icons.play_circle_outline,
@@ -101,8 +96,8 @@ class DetailsRoute extends StatelessWidget {
                               : ''),
                       style: TextStyle(
                           fontSize: 15,
-                          color: Colors.white.withOpacity(0.6),
-                          fontWeight: FontWeight.w200),
+                          color: Colors.redAccent.withOpacity(0.6),
+                          fontWeight: FontWeight.w500),
                     ),
                   ],
                 ),
@@ -119,9 +114,9 @@ class DetailsRoute extends StatelessWidget {
                         child: new Text(
                           SeriesData().series[data]['description'],
                           style: new TextStyle(
-                            fontSize: 12,
-                            color: Colors.white30,
-                            fontWeight: FontWeight.w100,
+                            fontSize: 14,
+                            color: Colors.white60,
+                            fontWeight: FontWeight.w600,
                           ),
                           textAlign: TextAlign.left,
                           softWrap: true,
@@ -141,8 +136,8 @@ class DetailsRoute extends StatelessWidget {
                           'Starring : ' + SeriesData().series[data]['starring'],
                           style: new TextStyle(
                             fontSize: 13,
-                            color: Colors.white54,
-                            fontWeight: FontWeight.w100,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
                           ),
                           textAlign: TextAlign.left,
                           softWrap: true,
@@ -230,7 +225,7 @@ class DetailsRoute extends StatelessWidget {
                   height: 1,
                 ),
                 SizedBox(
-                  height: 2,
+                  height: 15,
                   width: double.infinity,
                 ),
                 Row(
@@ -247,6 +242,10 @@ class DetailsRoute extends StatelessWidget {
                             width: 80,
                           ),
                           height: 2.0,
+                        ),
+                        SizedBox(
+
+                          height: 5,
                         ),
                         Text(
                           'EPISODES',
@@ -269,32 +268,32 @@ class DetailsRoute extends StatelessWidget {
                 ),
                 SeriesData().series[data]['movie'] == 'false'
                     ? FlatButton(
-                  onPressed: () {},
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.grey.withAlpha(100),
-                        borderRadius: BorderRadius.circular(5)),
-                    width: 120,
-                    height: 40,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'Season 1',
-                          style: TextStyle(
-                              fontSize: 15, color: Colors.white),
+                        onPressed: () {},
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey.withAlpha(100),
+                              borderRadius: BorderRadius.circular(5)),
+                          width: 120,
+                          height: 40,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                'Season 1',
+                                style: TextStyle(
+                                    fontSize: 15, color: Colors.white),
+                              ),
+                              Icon(
+                                Icons.arrow_drop_down,
+                                color: Colors.white,
+                              )
+                            ],
+                          ),
                         ),
-                        Icon(
-                          Icons.arrow_drop_down,
-                          color: Colors.white,
-                        )
-                      ],
-                    ),
-                  ),
-                )
+                      )
                     : SizedBox(
-                  height: 10,
-                ),
+                        height: 10,
+                      ),
                 SizedBox(
                   height: 10,
                 ),
@@ -313,6 +312,7 @@ class DetailsRoute extends StatelessWidget {
     _onPlayMovie() {
       Navigator.of(context).pushNamed('/watch');
     }
+
     return Container(
       height: 150,
       padding: EdgeInsets.all(10),

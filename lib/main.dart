@@ -1,30 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:netclick/models/app_state.dart';
+import 'package:netclick/redux/reducer.dart';
 import 'package:netclick/routes/home_page_route.dart';
+import 'package:netclick/routes/sign_up_route.dart';
+import 'package:netclick/routes/watch_route.dart';
+import 'package:redux/redux.dart';
+
 import 'package:netclick/routes/login_route.dart';
 
-import 'blocs/auth/auth_bloc.dart';
-import 'blocs/auth/auth_event.dart';
-import 'blocs/auth/auth_state.dart';
-import 'components/shared/loading_indicatior.dart';
 import 'data_providers/shared_prefs_auth_data_provider.dart';
+
+enum Actions { UpdateToken }
+
+// The reducer, which takes the previous count and increments it in response
+// to an Increment action.
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPrefsAuthDataProvider.load();
-  runApp(
-    BlocProvider<AuthenticationBloc>(
-      create: (context) {
-        return AuthenticationBloc()..add(AppStarted());
-      },
-      child: MyApp(),
-    ),
-  );
+  final store = new Store<AppState>(appStateReducer,
+      initialState: AppState(token: SharedPrefsAuthDataProvider.getToken()));
+  runApp(StoreProvider<AppState>(store: store, child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    String token = StoreProvider.of<AppState>(context).state.token;
+    String initialPage = (token == null || token == '') ? '/login' : '/';
+    print(StoreProvider.of<AppState>(context).state.token);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -43,24 +48,14 @@ class MyApp extends StatelessWidget {
             border: InputBorder.none,
             focusedBorder: InputBorder.none),
       ),
-      initialRoute: '/',
-//      routes: {
-//        '/': (context) => LoginRoute(),
-//      },
-      home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-        // ignore: missing_return
-        builder: (context, state) {
-          if (state is AuthenticationUnauthenticated) {
-            return LoginRoute();
-          }
-          if (state is AuthenticationLoading) {
-            return LoadingIndicator();
-          }
-          if (state is AuthenticationAuthenticated) {
-            return HomepageRoute();
-          }
-        },
-      ),
+      initialRoute: initialPage,
+      routes: {
+        '/': (context) => HomePage(),
+        '/login': (context) => LoginRoute(),
+        '/sign-up': (context) => SignUpRoute(),
+        '/watch': (context) => WatchRoute(),
+      },
+      // home: LoginRoute());
     );
   }
 }
@@ -70,7 +65,6 @@ class LoginInfo extends InheritedWidget {
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {
-    // TODO: implement updateShouldNotify
     return null;
   }
 }

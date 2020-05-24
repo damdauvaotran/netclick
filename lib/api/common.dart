@@ -27,7 +27,7 @@ Future get(
   return parseResponse(res);
 }
 
-Future<Map<String, dynamic>> post(
+Future post(
     {String url,
     body = const {},
     Map<String, String> query = const {},
@@ -37,7 +37,7 @@ Future<Map<String, dynamic>> post(
   return parseResponse(res);
 }
 
-Future<Map<String, dynamic>> put(
+Future put(
     {String url,
     body = const {},
     Map<String, String> query = const {},
@@ -47,7 +47,7 @@ Future<Map<String, dynamic>> put(
   return parseResponse(res);
 }
 
-Future<Map<String, dynamic>> delete(
+Future delete(
     {String url,
     Map<String, String> query = const {},
     Map<String, String> header = const {}}) async {
@@ -67,7 +67,7 @@ Future getAuth(
       header: {HttpHeaders.authorizationHeader: 'Bearer $token', ...header});
 }
 
-Future<Map<String, dynamic>> postAuth(
+Future postAuth(
     {String url,
     body = const {},
     Map<String, String> query = const {},
@@ -80,7 +80,7 @@ Future<Map<String, dynamic>> postAuth(
       header: {HttpHeaders.authorizationHeader: 'Bearer $token', ...header});
 }
 
-Future<Map<String, dynamic>> putAuth(
+Future putAuth(
     {String url,
     body = const {},
     Map<String, String> query = const {},
@@ -93,7 +93,7 @@ Future<Map<String, dynamic>> putAuth(
       header: {HttpHeaders.authorizationHeader: 'Bearer $token', ...header});
 }
 
-Future<Map<String, dynamic>> deleteAuth(
+Future deleteAuth(
     {String url,
     Map<String, String> query = const {},
     Map<String, String> header = const {}}) async {

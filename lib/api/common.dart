@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -63,7 +64,7 @@ Future<Map<String, dynamic>> getAuth(
   return await get(
       url: url,
       query: query,
-      header: {'Authorization': 'Bearer $token', ...header});
+      header: {HttpHeaders.authorizationHeader: 'Bearer $token', ...header});
 }
 
 Future<Map<String, dynamic>> postAuth(
@@ -76,7 +77,7 @@ Future<Map<String, dynamic>> postAuth(
       url: url,
       query: query,
       body: body,
-      header: {'Authorization': 'Bearer $token', ...header});
+      header: {HttpHeaders.authorizationHeader: 'Bearer $token', ...header});
 }
 
 Future<Map<String, dynamic>> putAuth(
@@ -89,7 +90,7 @@ Future<Map<String, dynamic>> putAuth(
       url: url,
       query: query,
       body: body,
-      header: {'Authorization': 'Bearer $token', ...header});
+      header: {HttpHeaders.authorizationHeader: 'Bearer $token', ...header});
 }
 
 Future<Map<String, dynamic>> deleteAuth(
@@ -100,5 +101,5 @@ Future<Map<String, dynamic>> deleteAuth(
   return await delete(
       url: url,
       query: query,
-      header: {'Authorization': 'Bearer $token', ...header});
+      header: {HttpHeaders.authorizationHeader: 'Bearer $token', ...header});
 }

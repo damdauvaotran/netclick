@@ -9,7 +9,7 @@ class UserRepository {
     @required String password,
   }) async {
     Map<String, dynamic> data = await post(
-        url: '/auth/login', body: {'username': username, 'password': password});
+        url: 'auth/login', body: {'username': username, 'password': password});
     final token = data['token'];
     return token;
   }
@@ -19,7 +19,7 @@ class UserRepository {
     @required String password,
   }) async {
     Map<String, dynamic> data = await post(
-        url: '/auth/signUp',
+        url: 'auth/signUp',
         body: {'username': username, 'password': password});
     return data;
   }

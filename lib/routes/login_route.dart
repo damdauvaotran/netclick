@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:netclick/api/repo/auth_repository.dart';
+import 'package:netclick/components/shared/error_snackbar.dart';
 import 'package:netclick/data_providers/shared_prefs_auth_data_provider.dart';
 import 'package:netclick/models/app_state.dart';
 import 'package:netclick/redux/actions.dart';
@@ -60,13 +61,18 @@ class LoginFormState extends State<LoginForm> {
 
   Future<void> _onLogin() async {
     if (_formKey.currentState.validate()) {
-      final token = await UserRepository.login(
-          username: _usernameController.value.text,
-          password: _passwordController.value.text);
-      print(token);
-      if (token != '' || token != null) {
-        StoreProvider.of<AppState>(context).dispatch(UpdateToken(token: token));
-        Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+      try {
+        final token = await UserRepository.login(
+            username: _usernameController.value.text,
+            password: _passwordController.value.text);
+        print(token);
+        if (token != '' || token != null) {
+          StoreProvider.of<AppState>(context)
+              .dispatch(UpdateToken(token: token));
+          Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+        }
+      } catch (e) {
+        Scaffold.of(context).showSnackBar(ErrorSnackBar(message: e));
       }
     }
   }
@@ -166,9 +172,6 @@ class LoginFormState extends State<LoginForm> {
                 ),
               ),
             ),
-          ),
-          Container(
-            child: null,
           ),
         ],
       ),

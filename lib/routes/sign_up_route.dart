@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:netclick/api/repo/auth_repository.dart';
+import 'package:netclick/components/shared/error_snackbar.dart';
 
 class SignUpRoute extends StatelessWidget {
   @override
@@ -58,13 +59,20 @@ class SignUpPageState extends State<SignUpPage> {
       FocusScope.of(context).requestFocus(_rePasswordFocusNode);
     });
   }
+  
+  void _onLogin(){
+    Navigator.of(context).pushNamed('/login');
+  }
 
   Future<void> _onSignUp() async {
     if (_formKey.currentState.validate()) {
-      final res = await UserRepository.signUp(
-          username: _usernameController.value.text,
-          password: _passwordController.value.text);
-      print(res['success']);
+      try {
+        final res = await UserRepository.signUp(
+            username: _usernameController.value.text,
+            password: _passwordController.value.text);
+      } catch (e){
+        Scaffold.of(context).showSnackBar(ErrorSnackBar(message: e));
+      }
     }
   }
 
@@ -166,6 +174,23 @@ class SignUpPageState extends State<SignUpPage> {
                     ),
                   )),
               onPressed: _onSignUp,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
+            width: double.infinity,
+            child: GestureDetector(
+              onTap: _onLogin,
+              child: Container(
+                margin: EdgeInsets.only(top: 10.0),
+                height: 45.0,
+                child: Center(
+                  child: Text(
+                    'Already have account? Let login',
+                    style: TextStyle(fontSize: 16.0, color: Colors.grey[400]),
+                  ),
+                ),
+              ),
             ),
           ),
         ],

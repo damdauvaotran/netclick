@@ -1,13 +1,30 @@
 import 'package:netclick/models/episode.dart';
 
-class Film{
-  List<Episode> _listEpisode;
+class Film {
+  int filmId;
+  String name;
+  String description;
+  double imdb;
+  int epCount;
+  String imgUri;
 
-  Film(){
-    _listEpisode = [];
-  }
+  Film({
+    this.filmId,
+    this.name,
+    this.description,
+    this.epCount,
+    this.imdb,
+    this.imgUri,
+  });
 
-  List<Episode> getListEpisode(){
-    return _listEpisode;
+  factory Film.fromJson(json) {
+    return Film(
+      filmId: json['filmId'] as int,
+      name: json['name'] as String,
+      description: json['description'] as String,
+      imdb: json['imdb'].toDouble(),
+      epCount: json['epCount'] as int,
+      imgUri: json['imgUri'] as String,
+    );
   }
 }

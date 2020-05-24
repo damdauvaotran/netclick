@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     String token = StoreProvider.of<AppState>(context).state.token;
     String initialPage = (token == null || token == '') ? '/login' : '/';
-    print(StoreProvider.of<AppState>(context).state.token);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(

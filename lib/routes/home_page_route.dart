@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:netclick/api/repo/film_repository.dart';
+import 'package:netclick/components/shared/error_snackbar.dart';
 import 'package:netclick/components/shared/film_tile.dart';
 import 'package:netclick/models/app_state.dart';
+import 'package:netclick/models/film.dart';
 import 'package:netclick/redux/actions.dart';
 
 class HomepageRoute extends StatelessWidget {
@@ -10,9 +13,7 @@ class HomepageRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Theme
-            .of(context)
-            .backgroundColor,
+        color: Theme.of(context).backgroundColor,
         child: HomePage(),
       ),
     );
@@ -28,14 +29,16 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  TabController controller;
+  TabController _controller;
+  Future<List<Film>> _futureFilmList;
 
   @override
   void initState() {
     super.initState();
 
     // Initialize the Tab Controller
-    controller = new TabController(length: 3, vsync: this);
+    _controller = new TabController(length: 3, vsync: this);
+    _futureFilmList = FilmRepository.getAllFilm();
   }
 
   _onTapTabBar(int index) {
@@ -82,82 +85,124 @@ class HomePageState extends State<HomePage>
               child: Text('Logout'),
             ),
           ],
-          //  Todo setup the controller
-          controller: controller,
+          controller: _controller,
           onTap: _onTapTabBar,
         ),
       ),
       body: new Container(
-        child: new ListView(
-          children: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(width: 10.0, height: 10.0),
-                Text.rich(
-                  TextSpan(text: 'Continue watching for Ram'),
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Montserrat'),
-                )
-              ],
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 5.0),
-              height: 240.0,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  FilmTile(
-                    image: AssetImage('assets/images/ghoul.jpg'),
-                    filmData: 'Ghl',
-                  ),
-                  FilmTile(
-                    image: AssetImage('assets/images/alc.jpg'),
-                    filmData: 'Alc',
-                  ),
-                ],
-              ),
-            ),
-            new Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(width: 10.0, height: 10.0),
-                Text.rich(
-                  TextSpan(text: 'Top Picks For You'),
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w800,
-                      fontFamily: 'Montserrat'),
-                )
-              ],
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 5.0),
-              height: 200.0,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  FilmTile(
-                    image: AssetImage('assets/images/ghoul.jpg'),
-                    filmData: 'Ghl',
-                  ),
-                  FilmTile(
-                    image: AssetImage('assets/images/alc.jpg'),
-                    filmData: 'Alc',
-                  ),
-                  FilmTile(
-                    image: AssetImage('assets/images/hox.jpg'),
-                    filmData: 'Hoc',
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+        child: FutureBuilder(
+            future: _futureFilmList,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+//                return ListView(
+//                  children: <Widget>[
+//                    Row(
+//                      crossAxisAlignment: CrossAxisAlignment.start,
+//                      children: <Widget>[
+//                        SizedBox(width: 10.0, height: 10.0),
+//                        Text.rich(
+//                          TextSpan(text: 'Continue watching for Ram'),
+//                          style: TextStyle(
+//                              color: Colors.white,
+//                              fontSize: 14.0,
+//                              fontWeight: FontWeight.w600,
+//                              fontFamily: 'Montserrat'),
+//                        )
+//                      ],
+//                    ),
+//                    Container(
+//                      margin: EdgeInsets.symmetric(vertical: 5.0),
+//                      height: 240.0,
+//                      child: ListView(
+//                        scrollDirection: Axis.horizontal,
+//                        children: <Widget>[
+//                          FilmTile(
+//                            image: AssetImage('assets/images/ghoul.jpg'),
+//                            filmData: 'Ghl',
+//                          ),
+//                          FilmTile(
+//                            image: AssetImage('assets/images/alc.jpg'),
+//                            filmData: 'Alc',
+//                          ),
+//                        ],
+//                      ),
+//                    ),
+//                    Row(
+//                      crossAxisAlignment: CrossAxisAlignment.start,
+//                      children: <Widget>[
+//                        SizedBox(width: 10.0, height: 10.0),
+//                        Text.rich(
+//                          TextSpan(text: 'Top Picks For You'),
+//                          style: TextStyle(
+//                              color: Colors.white,
+//                              fontSize: 14.0,
+//                              fontWeight: FontWeight.w800,
+//                              fontFamily: 'Montserrat'),
+//                        )
+//                      ],
+//                    ),
+//                    Container(
+//                      margin: EdgeInsets.symmetric(vertical: 5.0),
+//                      height: 200.0,
+//                      child: ListView(
+//                        scrollDirection: Axis.horizontal,
+//                        children: <Widget>[
+//                          FilmTile(
+//                            image: AssetImage('assets/images/ghoul.jpg'),
+//                            filmData: 'Ghl',
+//                          ),
+//                          FilmTile(
+//                            image: AssetImage('assets/images/alc.jpg'),
+//                            filmData: 'Alc',
+//                          ),
+//                          FilmTile(
+//                            image: AssetImage('assets/images/hox.jpg'),
+//                            filmData: 'Hoc',
+//                          ),
+//                        ],
+//                      ),
+//                    ),
+//                  ],
+//                );
+//              } else {
+                return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final Film film = snapshot.data[index];
+                    return Container(
+                      margin: EdgeInsets.symmetric(vertical: 5.0),
+                      height: 240.0,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: <Widget>[
+                          FilmTile(
+                            image: AssetImage('assets/images/ghoul.jpg'),
+                            filmData: 'Ghl',
+                          ),
+                          FilmTile(
+                            image: AssetImage('assets/images/alc.jpg'),
+                            filmData: 'Alc',
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              }
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    CircularProgressIndicator(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text('Please wait'),
+                  ],
+                ),
+              );
+            }),
       ),
     );
   }

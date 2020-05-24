@@ -65,7 +65,6 @@ class LoginFormState extends State<LoginForm> {
         final token = await UserRepository.login(
             username: _usernameController.value.text,
             password: _passwordController.value.text);
-        print(token);
         if (token != '' || token != null) {
           StoreProvider.of<AppState>(context)
               .dispatch(UpdateToken(token: token));

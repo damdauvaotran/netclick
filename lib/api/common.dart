@@ -12,15 +12,15 @@ const baseUrl = '10.0.2.2:8000';
 //  return http.post('$URL/todoList', body: {content: content, isDone: isDone});
 //}
 
-Map<String, dynamic> parseResponse(http.Response res) {
-  Map<String, dynamic> body = jsonDecode(res.body);
+dynamic parseResponse(http.Response res) {
+  dynamic body = jsonDecode(res.body);
   if (body['success']) {
     return body['data'];
   }
   throw (body['message']);
 }
 
-Future<Map<String, dynamic>> get(
+Future get(
     {String url, query = const {}, header = const {}}) async {
   final uri = Uri.http(baseUrl, url, query);
   final res = await http.get(uri, headers: header);
@@ -56,7 +56,7 @@ Future<Map<String, dynamic>> delete(
   return parseResponse(res);
 }
 
-Future<Map<String, dynamic>> getAuth(
+Future getAuth(
     {String url,
     Map<String, String> query = const {},
     Map<String, String> header = const {}}) async {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:netclick/api/repo/auth_repository.dart';
-import 'package:netclick/components/shared/error_snackbar.dart';
+import 'package:netclick/components/shared/app_snackbar.dart';
 
 class SignUpRoute extends StatelessWidget {
   @override
@@ -59,8 +59,8 @@ class SignUpPageState extends State<SignUpPage> {
       FocusScope.of(context).requestFocus(_rePasswordFocusNode);
     });
   }
-  
-  void _onLogin(){
+
+  void _onLogin() {
     Navigator.of(context).pushNamed('/login');
   }
 
@@ -70,7 +70,11 @@ class SignUpPageState extends State<SignUpPage> {
         final res = await UserRepository.signUp(
             username: _usernameController.value.text,
             password: _passwordController.value.text);
-      } catch (e){
+        Scaffold.of(context)
+            .showSnackBar(SuccessSnackBar(message: 'Sign up success. Please wait'));
+        await Future.delayed(Duration(seconds: 1));
+        Navigator.of(context).pushNamed('/login');
+      } catch (e) {
         Scaffold.of(context).showSnackBar(ErrorSnackBar(message: e));
       }
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:netclick/api/common.dart';
 import 'package:netclick/models/film.dart';
+import 'package:netclick/models/film_detail.dart';
 
 class FilmRepository {
   static Future<List<Film>> getAllFilm({String category}) async {
@@ -9,8 +10,8 @@ class FilmRepository {
     return filmList;
   }
 
-  static Future<Film> getFilmInfo({@required String filmId}) async {
+  static Future<FilmDetail> getFilmInfo({@required String filmId}) async {
     Map<String, dynamic> data = await getAuth(url: '/film/$filmId');
-    return Film.fromJson(data);
+    return FilmDetail.fromJson(data);
   }
 }

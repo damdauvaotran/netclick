@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:netclick/api/common.dart';
 import 'package:netclick/api/repo/film_repository.dart';
-import 'package:netclick/components/shared/error_snackbar.dart';
+import 'package:netclick/components/shared/app_snackbar.dart';
 import 'package:netclick/components/shared/film_tile.dart';
 import 'package:netclick/models/app_state.dart';
 import 'package:netclick/models/film.dart';
@@ -85,9 +85,9 @@ class HomePageState extends State<HomePage>
       ),
       body: new Container(
         child: FutureBuilder(
-            future: _futureFilmList,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
+          future: _futureFilmList,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
 //                return ListView(
 //                  children: <Widget>[
 //                    Row(
@@ -159,65 +159,66 @@ class HomePageState extends State<HomePage>
 //                  ],
 //                );
 //              } else {
-                return ListView(
-                  children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(width: 10.0, height: 10.0),
-                        Text.rich(
-                          TextSpan(text: 'Top Picks For You'),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w800,
-                              fontFamily: 'Montserrat'),
-                        )
-                      ],
+              return ListView(
+                children: <Widget>[
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(width: 10.0, height: 10.0),
+                      Text.rich(
+                        TextSpan(text: 'Top Picks For You'),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w800,
+                            fontFamily: 'Montserrat'),
+                      )
+                    ],
+                  ),
+                  Container(
+                    height: 240,
+                    child: ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final Film film = snapshot.data[index];
+                        return Container(
+                          margin: EdgeInsets.symmetric(vertical: 5.0),
+                          height: 240.0,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final Film film = snapshot.data[index];
+                              return FilmTile(
+                                image: NetworkImage(
+                                    Uri.http(baseUrl, 'images/${film.imgUri}')
+                                        .toString()),
+                                filmData: film,
+                              );
+                            },
+                          ),
+                        );
+                      },
                     ),
-                    Container(
-                      height: 240,
-                      child: ListView.builder(
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final Film film = snapshot.data[index];
-                          return Container(
-                            margin: EdgeInsets.symmetric(vertical: 5.0),
-                            height: 240.0,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                final Film film = snapshot.data[index];
-                                return FilmTile(
-                                  image: NetworkImage(
-                                      Uri.http(baseUrl, 'images/${film.imgUri}')
-                                          .toString()),
-                                  filmData: film,
-                                );
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                );
-              }
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    CircularProgressIndicator(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text('Please wait'),
-                  ],
-                ),
+                  ),
+                ],
               );
-            }),
+            }
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  CircularProgressIndicator(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text('Please wait'),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

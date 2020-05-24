@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:netclick/api/repo/auth_repository.dart';
-import 'package:netclick/components/shared/error_snackbar.dart';
+import 'package:netclick/components/shared/app_snackbar.dart';
 import 'package:netclick/data_providers/shared_prefs_auth_data_provider.dart';
 import 'package:netclick/models/app_state.dart';
 import 'package:netclick/redux/actions.dart';

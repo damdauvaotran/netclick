@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:netclick/models/film.dart';
 import '../components/shared/data.dart';
 import 'dart:ui';
 
 class DetailsRoute extends StatelessWidget {
-  final String data;
+  final Film data;
+  final ImageProvider image;
 
-  DetailsRoute({this.data});
+  DetailsRoute({this.data, this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class DetailsRoute extends StatelessWidget {
                 height: 240.0,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                  image: AssetImage(SeriesData().series[data]['thumbnail']),
+                  image: image,
                   fit: BoxFit.cover,
                   colorFilter:
                       ColorFilter.mode(Colors.black, BlendMode.softLight),
@@ -65,7 +67,7 @@ class DetailsRoute extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(width: 10),
                     Text(
-                      SeriesData().series[data]['title'],
+                      data.name,
                       style: TextStyle(
                           fontSize: 25,
                           color: Colors.white,
@@ -81,7 +83,7 @@ class DetailsRoute extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(width: 10),
                     Text(
-                      SeriesData().series[data]['match'],
+                      '100%',
                       style: TextStyle(
                           fontSize: 17,
                           color: Colors.green.withGreen(200),
@@ -89,11 +91,7 @@ class DetailsRoute extends StatelessWidget {
                     ),
                     SizedBox(width: 20),
                     Text(
-                      SeriesData().series[data]['year'] +
-                          '  16+' +
-                          (SeriesData().series[data]['movie'] == 'true'
-                              ? '  1h 52min'
-                              : ''),
+                      '2020' + '  16+' + '  1h 52min',
                       style: TextStyle(
                           fontSize: 15,
                           color: Colors.redAccent.withOpacity(0.6),
@@ -112,7 +110,7 @@ class DetailsRoute extends StatelessWidget {
                       SizedBox(width: 10),
                       Flexible(
                         child: new Text(
-                          SeriesData().series[data]['description'],
+                          data.description,
                           style: new TextStyle(
                             fontSize: 14,
                             color: Colors.white60,
@@ -133,7 +131,7 @@ class DetailsRoute extends StatelessWidget {
                       SizedBox(width: 10),
                       Flexible(
                         child: new Text(
-                          'Starring : ' + SeriesData().series[data]['starring'],
+                          'Starring : ' + '10',
                           style: new TextStyle(
                             fontSize: 13,
                             color: Colors.white,
@@ -244,7 +242,6 @@ class DetailsRoute extends StatelessWidget {
                           height: 2.0,
                         ),
                         SizedBox(
-
                           height: 5,
                         ),
                         Text(
@@ -266,7 +263,7 @@ class DetailsRoute extends StatelessWidget {
                   width: double.infinity,
                   height: 10,
                 ),
-                SeriesData().series[data]['movie'] == 'false'
+                data.name == 'false'
                     ? FlatButton(
                         onPressed: () {},
                         child: Container(
@@ -329,9 +326,7 @@ class DetailsRoute extends StatelessWidget {
                     Container(
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage(
-                                  SeriesData().series[data]['thumbnail'],
-                                ),
+                                image: image,
                                 fit: BoxFit.cover,
                                 colorFilter: ColorFilter.mode(
                                     Colors.black, BlendMode.softLight))),
@@ -371,7 +366,7 @@ class DetailsRoute extends StatelessWidget {
           SizedBox(height: 5),
           Flexible(
             child: Text(
-              SeriesData().series[data]['description'],
+              data.description,
               style: TextStyle(color: Colors.white30, fontSize: 11),
             ),
           ),

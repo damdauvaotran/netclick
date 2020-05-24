@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:netclick/api/common.dart';
 import 'package:netclick/api/repo/film_repository.dart';
 import 'package:netclick/components/shared/error_snackbar.dart';
 import 'package:netclick/components/shared/film_tile.dart';
@@ -52,13 +53,6 @@ class HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black87,
-//      floatingActionButton: FloatingActionButton(
-//        onPressed: () {},
-//        child: Icon(Icons.cast, color: Colors.white),
-//        backgroundColor: Color.fromRGBO(105, 105, 105, 1),
-//        tooltip: 'Casting',
-
-//      ),
       bottomNavigationBar: new Material(
         elevation: 1.0,
         color: Colors.black87,
@@ -165,28 +159,49 @@ class HomePageState extends State<HomePage>
 //                  ],
 //                );
 //              } else {
-                return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final Film film = snapshot.data[index];
-                    return Container(
-                      margin: EdgeInsets.symmetric(vertical: 5.0),
-                      height: 240.0,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          FilmTile(
-                            image: AssetImage('assets/images/ghoul.jpg'),
-                            filmData: 'Ghl',
-                          ),
-                          FilmTile(
-                            image: AssetImage('assets/images/alc.jpg'),
-                            filmData: 'Alc',
-                          ),
-                        ],
+                return ListView(
+                  children: <Widget>[
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(width: 10.0, height: 10.0),
+                        Text.rich(
+                          TextSpan(text: 'Top Picks For You'),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w800,
+                              fontFamily: 'Montserrat'),
+                        )
+                      ],
+                    ),
+                    Container(
+                      height: 240,
+                      child: ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final Film film = snapshot.data[index];
+                          return Container(
+                            margin: EdgeInsets.symmetric(vertical: 5.0),
+                            height: 240.0,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final Film film = snapshot.data[index];
+                                return FilmTile(
+                                  image: NetworkImage(
+                                      Uri.http(baseUrl, 'images/${film.imgUri}')
+                                          .toString()),
+                                  filmData: film,
+                                );
+                              },
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
+                    ),
+                  ],
                 );
               }
               return Center(

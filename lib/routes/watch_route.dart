@@ -14,7 +14,7 @@ class WatchRouteState extends State<WatchRoute> {
   void initState() {
     super.initState();
     _controller =
-        VideoPlayerController.network('http://10.0.2.2:8000/movies/a.mp4')
+        VideoPlayerController.network('http://10.0.2.2:8000/movies/GOTss1ep2.mp4')
           ..initialize().then((_) {
             // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
             setState(() {});

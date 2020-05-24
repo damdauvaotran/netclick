@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:netclick/models/film.dart';
 
 import '../../routes/detail_route.dart';
 
 class FilmTile extends StatefulWidget {
-  final AssetImage image;
-final String filmData;
+  final ImageProvider image;
+  final Film filmData;
 
-  FilmTile({@required this.image , this.filmData = ''});
+  FilmTile({@required this.image, @required this.filmData });
 
   @override
   State<FilmTile> createState() {
@@ -21,7 +22,8 @@ class FilmTileState extends State<FilmTile> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DetailsRoute(data: widget.filmData)),
+            MaterialPageRoute(
+                builder: (context) => DetailsRoute(image: widget.image, data: widget.filmData)),
           );
         },
         child: Container(

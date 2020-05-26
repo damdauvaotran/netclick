@@ -21,7 +21,7 @@ class WatchRouteState extends State<WatchRoute> {
   Future _initRoute;
 
   @override
-  void initState()  {
+  void initState() {
     _initRoute = init();
     super.initState();
 //    _controller = VideoPlayerController.network(
@@ -75,7 +75,7 @@ class WatchRouteState extends State<WatchRoute> {
           child: FutureBuilder(
               future: _initRoute,
               builder: (context, snapshot) {
-                if (snapshot.connectionState== ConnectionState.done) {
+                if (snapshot.connectionState == ConnectionState.done) {
                   return Stack(
                     children: [
                       Center(

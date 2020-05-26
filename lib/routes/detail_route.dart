@@ -125,7 +125,7 @@ class _DetailsRouteState extends State<DetailsRoute> {
                             ),
                             SizedBox(width: 20),
                             Text(
-                              widget.data.year.toString() + '  16+' + '  1h 52min',
+                              widget.data.year.toString() + '  16+',
                               style: TextStyle(
                                   fontSize: 15,
                                   color: Colors.redAccent.withOpacity(0.6),

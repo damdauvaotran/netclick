@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:netclick/api/common.dart';
 import 'package:netclick/api/repo/film_repository.dart';
+import 'package:netclick/components/search/search_screen.dart';
 import 'package:netclick/components/shared/app_snackbar.dart';
 import 'package:netclick/components/shared/film_tile.dart';
 import 'package:netclick/models/app_state.dart';
@@ -89,6 +90,7 @@ class HomePageState extends State<HomePage>
       ),
       body: TabBarView(
         controller: _tabController,
+        physics: NeverScrollableScrollPhysics(),
         children: <Widget>[
           Container(
             child: FutureBuilder<List<Film>>(
@@ -193,9 +195,6 @@ class HomePageState extends State<HomePage>
                             itemBuilder: (BuildContext context, int index) {
                               final Film film = snapshot.data[index];
                               return FilmTile(
-                                image: NetworkImage(
-                                    Uri.http(baseUrl, 'images/${film.imgUri}')
-                                        .toString()),
                                 filmData: film,
                               );
                             },
@@ -227,9 +226,6 @@ class HomePageState extends State<HomePage>
                             itemBuilder: (BuildContext context, int index) {
                               final Film film = snapshot.data[index];
                               return FilmTile(
-                                image: NetworkImage(
-                                    Uri.http(baseUrl, 'images/${film.imgUri}')
-                                        .toString()),
                                 filmData: film,
                               );
                             },
@@ -261,9 +257,6 @@ class HomePageState extends State<HomePage>
                             itemBuilder: (BuildContext context, int index) {
                               final Film film = snapshot.data[index];
                               return FilmTile(
-                                image: NetworkImage(
-                                    Uri.http(baseUrl, 'images/${film.imgUri}')
-                                        .toString()),
                                 filmData: film,
                               );
                             },
@@ -295,9 +288,6 @@ class HomePageState extends State<HomePage>
                             itemBuilder: (BuildContext context, int index) {
                               final Film film = snapshot.data[index];
                               return FilmTile(
-                                image: NetworkImage(
-                                    Uri.http(baseUrl, 'images/${film.imgUri}')
-                                        .toString()),
                                 filmData: film,
                               );
                             },
@@ -323,7 +313,9 @@ class HomePageState extends State<HomePage>
               },
             ),
           ),
-          Container(),
+          Container(
+            child: SearchScreen(),
+          ),
           // Not show anything, for logout propose
           Container(),
         ],

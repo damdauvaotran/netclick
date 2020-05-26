@@ -1,8 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:netclick/api/common.dart';
+import 'package:netclick/api/repo/episode_repository.dart';
+import 'package:netclick/models/episode.dart';
 import 'package:video_player/video_player.dart';
 
 class WatchRoute extends StatefulWidget {
+  final Episode episode;
+
+  WatchRoute({this.episode});
+
   @override
   WatchRouteState createState() => WatchRouteState();
 }
@@ -14,13 +21,28 @@ class WatchRouteState extends State<WatchRoute> {
   void initState() {
     super.initState();
     _controller = VideoPlayerController.network(
-        'http://10.0.2.2:8000/movies/GOTss1ep2.mp4')
+        Uri.http(baseUrl, 'movies/${widget.episode.uri}.mp4').toString())
       ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {
-          _controller.play();
+        EpisodeRepository.getEpInfo(epId: widget.episode.epId.toString())
+            .then((Episode futureEp) {
+          // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+          setState(() {
+            if (futureEp.currentTime > 0) {
+              _controller.seekTo(Duration(milliseconds: futureEp.currentTime));
+            }
+            _controller.play();
+          });
         });
       });
+  }
+
+  @override
+  void dispose() {
+    EpisodeRepository.saveProgress(
+        epId: widget.episode.epId,
+        progress: _controller.value.position.inMilliseconds);
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -118,11 +140,5 @@ class WatchRouteState extends State<WatchRoute> {
         ),
       )),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
   }
 }

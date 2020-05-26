@@ -29,7 +29,7 @@ Future get(
 
 Future post(
     {String url,
-    body = const {},
+ body = const {},
     Map<String, String> query = const {},
     Map<String, String> header = const {}}) async {
   final uri = Uri.http(baseUrl, url, query);
@@ -68,8 +68,7 @@ Future getAuth(
 }
 
 Future postAuth(
-    {String url,
-    body = const {},
+    {String url, body = const {},
     Map<String, String> query = const {},
     Map<String, String> header = const {}}) async {
   final String token = SharedPrefsAuthDataProvider.getToken();

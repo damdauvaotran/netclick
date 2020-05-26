@@ -84,7 +84,7 @@ class HomePageState extends State<HomePage>
         ),
       ),
       body: new Container(
-        child: FutureBuilder(
+        child: FutureBuilder<List<Film>>(
           future: _futureFilmList,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -177,28 +177,123 @@ class HomePageState extends State<HomePage>
                   ),
                   Container(
                     height: 240,
-                    child: ListView.builder(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final Film film = snapshot.data[index];
-                        return Container(
-                          margin: EdgeInsets.symmetric(vertical: 5.0),
-                          height: 240.0,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              final Film film = snapshot.data[index];
-                              return FilmTile(
-                                image: NetworkImage(
-                                    Uri.http(baseUrl, 'images/${film.imgUri}')
-                                        .toString()),
-                                filmData: film,
-                              );
-                            },
-                          ),
-                        );
-                      },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 5.0),
+                      height: 240.0,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final Film film = snapshot.data[index];
+                          return FilmTile(
+                            image: NetworkImage(
+                                Uri.http(baseUrl, 'images/${film.imgUri}')
+                                    .toString()),
+                            filmData: film,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(width: 10.0, height: 10.0),
+                      Text.rich(
+                        TextSpan(text: 'Trending'),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w800,
+                            fontFamily: 'Montserrat'),
+                      )
+                    ],
+                  ),
+                  Container(
+                    height: 240,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 5.0),
+                      height: 240.0,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final Film film = snapshot.data[index];
+                          return FilmTile(
+                            image: NetworkImage(
+                                Uri.http(baseUrl, 'images/${film.imgUri}')
+                                    .toString()),
+                            filmData: film,
+                          );
+                        },
+                      ),
+                    ),
+                  ),    Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(width: 10.0, height: 10.0),
+                      Text.rich(
+                        TextSpan(text: 'Comedy'),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w800,
+                            fontFamily: 'Montserrat'),
+                      )
+                    ],
+                  ),
+                  Container(
+                    height: 240,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 5.0),
+                      height: 240.0,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final Film film = snapshot.data[index];
+                          return FilmTile(
+                            image: NetworkImage(
+                                Uri.http(baseUrl, 'images/${film.imgUri}')
+                                    .toString()),
+                            filmData: film,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(width: 10.0, height: 10.0),
+                      Text.rich(
+                        TextSpan(text: 'Actions'),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w800,
+                            fontFamily: 'Montserrat'),
+                      )
+                    ],
+                  ),
+                  Container(
+                    height: 240,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 5.0),
+                      height: 240.0,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final Film film = snapshot.data[index];
+                          return FilmTile(
+                            image: NetworkImage(
+                                Uri.http(baseUrl, 'images/${film.imgUri}')
+                                    .toString()),
+                            filmData: film,
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ],

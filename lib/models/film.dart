@@ -7,6 +7,8 @@ class Film {
   double imdb;
   int epCount;
   String imgUri;
+  int year;
+  String starring;
 
   Film({
     this.filmId,
@@ -15,6 +17,8 @@ class Film {
     this.epCount,
     this.imdb,
     this.imgUri,
+    this.year,
+    this.starring,
   });
 
   factory Film.fromJson(json) {
@@ -25,6 +29,8 @@ class Film {
       imdb: json['imdb'].toDouble(),
       epCount: json['epCount'] as int,
       imgUri: json['imgUri'] as String,
+      year: json['year'] as int,
+      starring: json['starring'] as String,
     );
   }
 }

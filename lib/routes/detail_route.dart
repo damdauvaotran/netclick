@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:netclick/api/repo/film_repository.dart';
+import 'package:netclick/models/episode.dart';
 import 'package:netclick/models/film.dart';
 import 'package:netclick/models/film_detail.dart';
-import '../components/shared/data.dart';
+import 'package:netclick/routes/watch_route.dart';
 import 'dart:ui';
+
+import 'package:netclick/utils.dart';
 
 class DetailsRoute extends StatefulWidget {
   final Film data;
@@ -21,25 +24,32 @@ class _DetailsRouteState extends State<DetailsRoute> {
 
   @override
   void initState() {
+
     super.initState();
     _futureFilmDetail =
         FilmRepository.getFilmInfo(filmId: widget.data.filmId.toString());
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    _onPlayMovie() {
-      Navigator.of(context).pushNamed('/watch');
+    _onPlayMovie(Episode episode) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => WatchRoute(episode: episode)));
     }
 
     double width = MediaQuery.of(context).size.width * 0.95;
 
     return Scaffold(
-      body: FutureBuilder<Object>(
+      body: FutureBuilder<FilmDetail>(
           future: _futureFilmDetail,
           builder: (context, snapshot) {
-            print(snapshot.hasError);
             if (snapshot.hasData) {
+              final filmDetail = snapshot.data;
               return new Container(
                 color: Colors.black87,
                 child: ListView(
@@ -71,7 +81,9 @@ class _DetailsRouteState extends State<DetailsRoute> {
                               ),
                               Center(
                                 child: GestureDetector(
-                                  onTap: _onPlayMovie,
+                                  onTap: () {
+                                    _onPlayMovie(filmDetail.episodes[0]);
+                                  },
                                   child: Icon(Icons.play_circle_outline,
                                       color: Colors.white54, size: 100),
                                 ),
@@ -80,7 +92,6 @@ class _DetailsRouteState extends State<DetailsRoute> {
                           ),
                         )),
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(
                           height: 10,
@@ -167,76 +178,78 @@ class _DetailsRouteState extends State<DetailsRoute> {
                             ],
                           ),
                         ),
-//                Container(
-//                  margin: EdgeInsets.symmetric(vertical: 10.0),
-//                  padding: EdgeInsets.symmetric(horizontal: 20),
-//                  width: double.infinity,
-//                  height: 80,
-//                  child: Row(
-//                    children: <Widget>[
-//                      Column(
-//                        children: <Widget>[
-//                          IconButton(
-//                            icon: Icon(Icons.done, color: Colors.white),
-//                            onPressed: () {},
-//                          ),
-//                          Text(
-//                            'My List',
-//                            style:
-//                            TextStyle(color: Colors.white30, fontSize: 10),
-//                          )
-//                        ],
-//                      ),
-//                      SizedBox(width: 40),
-//                      Column(
-//                        children: <Widget>[
-//                          IconButton(
-//                            icon: Icon(Icons.thumb_up, color: Colors.white),
-//                            onPressed: () {},
-//                          ),
-//                          Text(
-//                            'Rate',
-//                            style:
-//                            TextStyle(color: Colors.white30, fontSize: 10),
-//                          )
-//                        ],
-//                      ),
-//                      SizedBox(
-//                        width: 40,
-//                      ),
-//                      Column(
-//                        children: <Widget>[
-//                          IconButton(
-//                            icon: Icon(Icons.share, color: Colors.white),
-//                            onPressed: () {},
-//                          ),
-//                          Text(
-//                            'Share',
-//                            style:
-//                            TextStyle(color: Colors.white30, fontSize: 10),
-//                          )
-//                        ],
-//                      ),
-//                      SizedBox(
-//                        width: 40,
-//                      ),
-//                      Column(
-//                        children: <Widget>[
-//                          IconButton(
-//                            icon:
-//                            Icon(Icons.file_download, color: Colors.white),
-//                            onPressed: () {},
-//                          ),
-//                          Text(
-//                            'Download',
-//                            style:
-//                            TextStyle(color: Colors.white30, fontSize: 10),
-//                          )
-//                        ],
-//                      ),
-//                    ],
-//                  ),
-//                ),
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 10.0),
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          width: double.infinity,
+                          height: 80,
+                          child: Row(
+                            children: <Widget>[
+                              Column(
+                                children: <Widget>[
+                                  IconButton(
+                                    icon: Icon(Icons.done, color: Colors.white),
+                                    onPressed: () {},
+                                  ),
+                                  Text(
+                                    'My List',
+                                    style: TextStyle(
+                                        color: Colors.white30, fontSize: 10),
+                                  )
+                                ],
+                              ),
+                              SizedBox(width: 40),
+                              Column(
+                                children: <Widget>[
+                                  IconButton(
+                                    icon: Icon(Icons.thumb_up,
+                                        color: Colors.white),
+                                    onPressed: () {},
+                                  ),
+                                  Text(
+                                    'Rate',
+                                    style: TextStyle(
+                                        color: Colors.white30, fontSize: 10),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                width: 40,
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  IconButton(
+                                    icon:
+                                        Icon(Icons.share, color: Colors.white),
+                                    onPressed: () {},
+                                  ),
+                                  Text(
+                                    'Share',
+                                    style: TextStyle(
+                                        color: Colors.white30, fontSize: 10),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                width: 40,
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  IconButton(
+                                    icon: Icon(Icons.file_download,
+                                        color: Colors.white),
+                                    onPressed: () {},
+                                  ),
+                                  Text(
+                                    'Download',
+                                    style: TextStyle(
+                                        color: Colors.white30, fontSize: 10),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                         Divider(
                           color: Colors.black,
                           height: 1,
@@ -274,13 +287,6 @@ class _DetailsRouteState extends State<DetailsRoute> {
                                 )
                               ],
                             ),
-//                    SizedBox(
-//                      width: 20,
-//                    ),
-//                    Text(
-//                      'MORE LIKE THIS',
-//                      style: TextStyle(fontSize: 15, color: Colors.white54),
-//                    ),
                           ],
                         ),
                         SizedBox(
@@ -318,18 +324,20 @@ class _DetailsRouteState extends State<DetailsRoute> {
                         SizedBox(
                           height: 10,
                         ),
-                        episodeBlock(context, '1. The One With The Blackout'),
-                        episodeBlock(
-                            context, '2. The One Where Everyone Knows'),
-                        episodeBlock(
-                            context, '3. The one With Late Thanksgiving')
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: ClampingScrollPhysics(),
+                            itemCount: filmDetail.episodes.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return episodeBlock(
+                                  context, filmDetail.episodes[index]);
+                            })
                       ],
                     )
                   ],
                 ),
               );
             } else if (snapshot.hasError) {
-              print(snapshot.error);
               return Column(
                 children: <Widget>[
                   Icon(
@@ -361,9 +369,10 @@ class _DetailsRouteState extends State<DetailsRoute> {
     );
   }
 
-  Container episodeBlock(context, epTitle) {
+  Container episodeBlock(context, Episode episode) {
     _onPlayMovie() {
-      Navigator.of(context).pushNamed('/watch');
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => WatchRoute(episode: episode)));
     }
 
     return Container(
@@ -404,7 +413,7 @@ class _DetailsRouteState extends State<DetailsRoute> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      epTitle,
+                      '${episode.epNum}.  ${episode.name}',
                       style: TextStyle(color: Colors.white, fontSize: 13),
                     ),
                     SizedBox(
@@ -420,13 +429,13 @@ class _DetailsRouteState extends State<DetailsRoute> {
             ),
           ),
           SizedBox(height: 5),
-          Flexible(
+          Container(
+            alignment: Alignment.centerLeft,
             child: Text(
-              widget.data.description,
+              truncateWithEllipsis(episode.description, cutoff: 250),
               style: TextStyle(color: Colors.white30, fontSize: 11),
             ),
           ),
-          Divider(color: Colors.black, height: 40)
         ],
       ),
     );

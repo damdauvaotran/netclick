@@ -125,7 +125,7 @@ class _DetailsRouteState extends State<DetailsRoute> {
                             ),
                             SizedBox(width: 20),
                             Text(
-                              '2020' + '  16+' + '  1h 52min',
+                              widget.data.year.toString() + '  16+' + '  1h 52min',
                               style: TextStyle(
                                   fontSize: 15,
                                   color: Colors.redAccent.withOpacity(0.6),
@@ -374,7 +374,6 @@ class _DetailsRouteState extends State<DetailsRoute> {
       Navigator.of(context).push(MaterialPageRoute(
           builder: (BuildContext context) => WatchRoute(episode: episode)));
     }
-
     return Container(
       height: 150,
       padding: EdgeInsets.all(10),
@@ -403,7 +402,7 @@ class _DetailsRouteState extends State<DetailsRoute> {
                         )),
                     SizedBox(
                       height: 2,
-                      child: Container(width: 60, color: Colors.red),
+                      child: Container(width: episode.currentTime/episode.duration*100, color: Colors.red),
                     )
                   ],
                 ),

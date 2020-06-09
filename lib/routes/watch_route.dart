@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:netclick/api/common.dart';
@@ -19,34 +21,26 @@ class WatchRouteState extends State<WatchRoute> {
   VideoPlayerController _controller;
   Episode _episode;
   Future _initRoute;
+  Timer _timer;
 
   @override
   void initState() {
     _initRoute = init();
     super.initState();
-//    _controller = VideoPlayerController.network(
-//        Uri.http(baseUrl, 'movies/${widget.episode.uri}.mp4').toString())
-//      ..initialize().then((_) {
-//        EpisodeRepository.getEpInfo(epId: widget.episode.epId.toString())
-//            .then((Episode futureEp) {
-//          // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-//          setState(() {
-//            if (futureEp.currentTime > 0) {
-//              _controller.seekTo(Duration(milliseconds: futureEp.currentTime));
-//            }
-//            _controller.play();
-//          });
-//        });
-//      });
   }
 
   @override
   void dispose() {
-    EpisodeRepository.saveProgress(
+    _saveProgress();
+    _controller.dispose();
+    _timer.cancel();
+    super.dispose();
+  }
+
+  Future<void> _saveProgress() async {
+    await EpisodeRepository.saveProgress(
         epId: widget.episode.epId,
         progress: _controller.value.position.inMilliseconds);
-    _controller.dispose();
-    super.dispose();
   }
 
   Future init() async {
@@ -61,6 +55,12 @@ class WatchRouteState extends State<WatchRoute> {
       _controller.seekTo(Duration(milliseconds: _episode.currentTime));
     }
     _controller.play();
+
+    // Save progress periodic
+    const saveDuration = const Duration(milliseconds: 500);
+    _timer = Timer.periodic(saveDuration, (Timer t) {
+      _saveProgress();
+    });
   }
 
   @override

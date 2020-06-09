@@ -71,7 +71,7 @@ class LoginFormState extends State<LoginForm> {
           Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
         }
       } catch (e) {
-        Scaffold.of(context).showSnackBar(ErrorSnackBar(message: e));
+        Scaffold.of(context).showSnackBar(ErrorSnackBar(message: e.toString()));
       }
     }
   }

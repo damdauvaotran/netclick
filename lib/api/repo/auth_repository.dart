@@ -11,7 +11,6 @@ class UserRepository {
     Map<String, dynamic> data = await post(
         url: 'auth/login', body: {'username': username, 'password': password});
     final token = data['token'];
-    print(token);
     return token;
   }
 

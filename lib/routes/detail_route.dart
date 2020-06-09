@@ -57,7 +57,6 @@ class _DetailsRouteState extends State<DetailsRoute> {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
                 final filmDetail = snapshot.data;
-                print(filmDetail.episodes[0].currentTime);
                 return new Container(
                   color: Colors.black87,
                   child: ListView(

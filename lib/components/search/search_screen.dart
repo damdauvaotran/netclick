@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:netclick/api/common.dart';
 import 'package:netclick/api/repo/film_repository.dart';
+import 'package:netclick/components/shared/app_snackbar.dart';
 import 'package:netclick/components/shared/film_tile.dart';
 import 'package:netclick/components/shared/loading_indicatior.dart';
 import 'package:netclick/models/film.dart';
@@ -20,7 +21,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     _searchController = TextEditingController();
-    _futureDefaultFilmList = FilmRepository.getAllFilm();
+    _fetchFilm();
     super.initState();
   }
 
@@ -36,6 +37,16 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       _searchFilmList = tempSearchFilmList;
     });
+  }
+
+  void _fetchFilm() {
+    try {
+      this.setState(() {
+        _futureDefaultFilmList = FilmRepository.getAllFilm();
+      });
+    } catch (e) {
+      Scaffold.of(context).showSnackBar(ErrorSnackBar(message: e.toString()));
+    }
   }
 
   @override

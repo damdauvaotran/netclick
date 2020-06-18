@@ -16,12 +16,12 @@ dynamic parseResponse(http.Response res) {
   dynamic body = jsonDecode(res.body);
   if (body['success']) {
     return body['data'];
+  } else {
+    throw (body['message']);
   }
-  throw (body['message']);
 }
 
-Future get(
-    {String url, query = const {}, header = const {}}) async {
+Future get({String url, query = const {}, header = const {}}) async {
   final uri = Uri.http(baseUrl, url, query);
   final res = await http.get(uri, headers: header);
   return parseResponse(res);
@@ -29,7 +29,7 @@ Future get(
 
 Future post(
     {String url,
- body = const {},
+    body = const {},
     Map<String, String> query = const {},
     Map<String, String> header = const {}}) async {
   final uri = Uri.http(baseUrl, url, query);
@@ -68,7 +68,8 @@ Future getAuth(
 }
 
 Future postAuth(
-    {String url, body = const {},
+    {String url,
+    body = const {},
     Map<String, String> query = const {},
     Map<String, String> header = const {}}) async {
   final String token = SharedPrefsAuthDataProvider.getToken();

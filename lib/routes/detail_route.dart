@@ -206,55 +206,6 @@ class _DetailsRouteState extends State<DetailsRoute> {
                                     )
                                   ],
                                 ),
-                                SizedBox(width: 40),
-                                Column(
-                                  children: <Widget>[
-                                    IconButton(
-                                      icon: Icon(Icons.thumb_up,
-                                          color: Colors.white),
-                                      onPressed: () {},
-                                    ),
-                                    Text(
-                                      'Rate',
-                                      style: TextStyle(
-                                          color: Colors.white30, fontSize: 10),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 40,
-                                ),
-                                Column(
-                                  children: <Widget>[
-                                    IconButton(
-                                      icon: Icon(Icons.share,
-                                          color: Colors.white),
-                                      onPressed: () {},
-                                    ),
-                                    Text(
-                                      'Share',
-                                      style: TextStyle(
-                                          color: Colors.white30, fontSize: 10),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 40,
-                                ),
-                                Column(
-                                  children: <Widget>[
-                                    IconButton(
-                                      icon: Icon(Icons.file_download,
-                                          color: Colors.white),
-                                      onPressed: () {},
-                                    ),
-                                    Text(
-                                      'Download',
-                                      style: TextStyle(
-                                          color: Colors.white30, fontSize: 10),
-                                    )
-                                  ],
-                                ),
                               ],
                             ),
                           ),

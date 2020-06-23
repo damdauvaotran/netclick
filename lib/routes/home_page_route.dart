@@ -9,6 +9,7 @@ import 'package:netclick/components/shared/film_tile.dart';
 import 'package:netclick/models/app_state.dart';
 import 'package:netclick/models/film.dart';
 import 'package:netclick/redux/actions.dart';
+import 'package:netclick/components/favorite_list/list_screen.dart';
 
 class HomepageRoute extends StatelessWidget {
   @override
@@ -39,12 +40,12 @@ class HomePageState extends State<HomePage>
     super.initState();
 
     // Initialize the Tab Controller
-    _tabController = new TabController(length: 3, vsync: this);
+    _tabController = new TabController(length: 4, vsync: this);
     _futureFilmList = FilmRepository.getAllFilm();
   }
 
   _onTapTabBar(int index) {
-    if (index == 2) {
+    if (index == 3) {
       _logOut();
     }
   }
@@ -79,6 +80,10 @@ class HomePageState extends State<HomePage>
 //            new Tab(
 //              icon: new Icon(Icons.file_download),
 //            ),
+            Tab(
+              icon: Icon(Icons.account_circle),
+              child: Text('List'),
+            ),
             new Tab(
               icon: new Icon(Icons.power_settings_new),
               child: Text('Logout'),
@@ -317,6 +322,9 @@ class HomePageState extends State<HomePage>
             child: SearchScreen(),
           ),
           // Not show anything, for logout propose
+          Container(
+            child: ListScreen(),
+          ),
           Container(),
         ],
       ),

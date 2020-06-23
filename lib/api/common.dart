@@ -17,7 +17,7 @@ dynamic parseResponse(http.Response res) {
   if (body['success']) {
     return body['data'];
   } else {
-    throw (body['message']);
+    throw body['message'];
   }
 }
 

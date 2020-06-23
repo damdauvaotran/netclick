@@ -14,4 +14,16 @@ class FilmRepository {
     Map<String, dynamic> data = await getAuth(url: 'film/$filmId');
     return FilmDetail.fromJson(data);
   }
+
+  static Future addToFavorite({@required String filmId}) async {
+    Map<String, dynamic> data =
+        await postAuth(url: '/list/favorite/add', body: {'filmId': filmId});
+    return data;
+  }
+
+  static Future removeFromFavorite({@required String filmId}) async {
+    Map<String, dynamic> data =
+        await postAuth(url: '/list/favorite/remove', body: {'filmId': filmId});
+    return data;
+  }
 }

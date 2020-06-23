@@ -81,8 +81,8 @@ class HomePageState extends State<HomePage>
 //              icon: new Icon(Icons.file_download),
 //            ),
             Tab(
-              icon: Icon(Icons.account_circle),
-              child: Text('List'),
+              icon: Icon(Icons.favorite),
+              child: Text('Favorite'),
             ),
             new Tab(
               icon: new Icon(Icons.power_settings_new),

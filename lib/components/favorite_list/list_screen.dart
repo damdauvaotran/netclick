@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:netclick/api/repo/list_repository.dart';
 import 'package:netclick/components/shared/app_snackbar.dart';
@@ -50,25 +51,43 @@ class _ListScreenState extends State<ListScreen> {
           child: FutureBuilder<FilmList>(
             future: _futureFavoriteFilm,
             builder: (BuildContext context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done ) {
-                if (snapshot.hasError){
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
                   return Text(snapshot.error.toString());
                 }
                 final List<Film> filmList = snapshot.data.films;
-                return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 2 / 3,
+
+                if (filmList.length > 0) {
+                  return GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 2 / 3,
+                    ),
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemCount: filmList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      Film film = filmList[index];
+                      return FilmTile(
+                        filmData: film,
+                      );
+                    },
+                  );
+                }
+                return Container(
+                  margin: EdgeInsets.only(top: 10, left: 10),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Your favorite is empty. Let find some fun',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Icon(
+                        Icons.favorite,
+                        color: Colors.pink,
+                      )
+                    ],
                   ),
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  itemCount: filmList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    Film film = filmList[index];
-                    return FilmTile(
-                      filmData: film,
-                    );
-                  },
                 );
               }
               return LoadingIndicator();

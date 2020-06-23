@@ -17,7 +17,7 @@ class FilmList {
     List list = List.from(json['films']);
     List<Film> favoriteList = list.map((film) => Film.fromJson(film)).toList();
     return FilmList(
-      listName: json['userName'].toString(,
+      listName: json['userName'].toString(),
       favorite: json['name'] as bool,
       userId: json['userId'].toString(),
       films: favoriteList,

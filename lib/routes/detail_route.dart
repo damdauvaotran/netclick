@@ -196,11 +196,11 @@ class _DetailsRouteState extends State<DetailsRoute> {
                                   children: <Widget>[
                                     IconButton(
                                       icon:
-                                          Icon(Icons.done, color: Colors.white),
+                                          Icon(Icons.favorite, color: filmDetail.liked? Colors.white: Colors.pink  ),
                                       onPressed: () {},
                                     ),
                                     Text(
-                                      'My List',
+                                      'Favorite',
                                       style: TextStyle(
                                           color: Colors.white30, fontSize: 10),
                                     )

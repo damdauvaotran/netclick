@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return ListView(
       children: <Widget>[
         CategoryList(futureFilmList: _futureFilmList, name: 'Top Picks For You'),
-        CategoryList(futureFilmList: _futureAnimatedFilmList, name: 'Action'),
+        CategoryList(futureFilmList: _futureActionFilmList, name: 'Action'),
         CategoryList(futureFilmList: _futureComedyFilmList, name: 'Comedy'),
         CategoryList(futureFilmList: _futureRomanceFilmList, name: 'Romance'),
         CategoryList(futureFilmList: _futureAnimatedFilmList, name: 'Animated'),

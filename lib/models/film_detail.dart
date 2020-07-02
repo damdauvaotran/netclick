@@ -17,7 +17,7 @@ class FilmDetail {
       this.epCount,
       this.imdb,
       this.imgUri,
-      this.liked = false,
+      this.liked,
       this.episodes});
 
   factory FilmDetail.fromJson(json) {
@@ -25,7 +25,6 @@ class FilmDetail {
     json['episodes'].forEach((epJson) {
       tempEpisodes.add(Episode.fromJson(epJson));
     });
-    print(json['liked'] == 'true');
     return FilmDetail(
       filmId: json['filmId'] as int,
       name: json['name'].toString(),
@@ -33,7 +32,7 @@ class FilmDetail {
       imdb: json['imdb'].toDouble(),
       epCount: json['epCount'] as int,
       imgUri: json['imgUri'].toString(),
-      liked: json['liked'] == 'true',
+      liked: json['liked'].toString() == 'true',
       episodes: tempEpisodes,
     );
   }

@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:netclick/api/repo/auth_repository.dart';
 import 'package:netclick/components/shared/app_snackbar.dart';
-import 'package:netclick/data_providers/shared_prefs_auth_data_provider.dart';
-import 'package:netclick/models/app_state.dart';
-import 'package:netclick/redux/actions.dart';
-import 'package:netclick/routes/sign_up_route.dart';
 
-class LoginRoute extends StatelessWidget {
+class SignUpRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,27 +20,27 @@ class LoginRoute extends StatelessWidget {
         ),
       ),
       body: Container(
-        color: Theme.of(context).backgroundColor,
-        child: LoginForm(),
-      ),
+          color: Theme.of(context).backgroundColor, child: SignUpPage()),
     );
   }
 }
 
-class LoginForm extends StatefulWidget {
+class SignUpPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return LoginFormState();
+    return SignUpPageState();
   }
 }
 
-class LoginFormState extends State<LoginForm> {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+class SignUpPageState extends State<SignUpPage> {
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _rePasswordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   FocusNode _usernameFocusNode;
   FocusNode _passwordFocusNode;
-
-  final _formKey = GlobalKey<FormState>();
+  FocusNode _rePasswordFocusNode;
 
   void _requestUsernameFocus() {
     setState(() {
@@ -59,38 +54,45 @@ class LoginFormState extends State<LoginForm> {
     });
   }
 
-  Future<void> _onLogin() async {
+  void _requestRePasswordFocus() {
+    setState(() {
+      FocusScope.of(context).requestFocus(_rePasswordFocusNode);
+    });
+  }
+
+  void _onLogin() {
+    Navigator.of(context).pushNamed('/login');
+  }
+
+  Future<void> _onSignUp() async {
     if (_formKey.currentState.validate()) {
       try {
-        final token = await UserRepository.login(
+        final res = await UserRepository.signUp(
             username: _usernameController.value.text,
             password: _passwordController.value.text);
-        if (token != '' || token != null) {
-          StoreProvider.of<AppState>(context)
-              .dispatch(UpdateToken(token: token));
-          Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
-        }
+        Scaffold.of(context)
+            .showSnackBar(SuccessSnackBar(message: 'Sign up success. Please wait'));
+        await Future.delayed(Duration(seconds: 1));
+        Navigator.of(context).pushNamed('/login');
       } catch (e) {
-        Scaffold.of(context).showSnackBar(ErrorSnackBar(message: e.toString()));
+        Scaffold.of(context).showSnackBar(ErrorSnackBar(message: e));
       }
     }
   }
 
-  void _onSignUp() {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => SignUpRoute()));
-  }
-
+  @override
   void initState() {
     super.initState();
     _usernameFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
+    _rePasswordFocusNode = FocusNode();
   }
 
   @override
   void dispose() {
     _usernameFocusNode.dispose();
     _passwordFocusNode.dispose();
+    _rePasswordFocusNode.dispose();
     super.dispose();
   }
 
@@ -103,7 +105,7 @@ class LoginFormState extends State<LoginForm> {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Container(
-            margin: EdgeInsets.all(20.0),
+            margin: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
             child: TextFormField(
               onTap: _requestUsernameFocus,
               focusNode: _usernameFocusNode,
@@ -121,7 +123,7 @@ class LoginFormState extends State<LoginForm> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(left: 20.0, right: 20.0),
+            padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
             child: TextFormField(
               onTap: _requestPasswordFocus,
               focusNode: _passwordFocusNode,
@@ -140,6 +142,30 @@ class LoginFormState extends State<LoginForm> {
             ),
           ),
           Container(
+            padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+            child: TextFormField(
+                onTap: _requestRePasswordFocus,
+                focusNode: _rePasswordFocusNode,
+                controller: _rePasswordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: 'Confirm password',
+                  labelStyle: TextStyle(
+                    color: _rePasswordFocusNode.hasFocus
+                        ? Colors.white
+                        : Colors.grey[400],
+                  ),
+                  fillColor: Colors.grey[700],
+                  filled: true,
+                ),
+                validator: (val) {
+                  if (val.isEmpty) return 'Empty';
+                  if (val != _passwordController.text)
+                    return 'Password not match';
+                  return null;
+                }),
+          ),
+          Container(
             margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
             width: double.infinity,
             child: OutlineButton(
@@ -147,25 +173,24 @@ class LoginFormState extends State<LoginForm> {
                   height: 45.0,
                   child: Center(
                     child: Text(
-                      'Sign in',
+                      'Sign up',
                       style: TextStyle(fontSize: 18.0),
                     ),
                   )),
-              // Todo: Change this
-              onPressed: _onLogin,
+              onPressed: _onSignUp,
             ),
           ),
           Container(
             margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
             width: double.infinity,
             child: GestureDetector(
-              onTap: _onSignUp,
+              onTap: _onLogin,
               child: Container(
-                margin: EdgeInsets.only(top: 30.0),
+                margin: EdgeInsets.only(top: 10.0),
                 height: 45.0,
                 child: Center(
                   child: Text(
-                    'Need an account? Sign up now',
+                    'Already have account? Let login',
                     style: TextStyle(fontSize: 16.0, color: Colors.grey[400]),
                   ),
                 ),

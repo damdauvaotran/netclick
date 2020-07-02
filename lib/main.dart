@@ -1,42 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:netclick/models/app_state.dart';
+import 'package:netclick/redux/reducer.dart';
+import 'package:netclick/routes/home_page_route.dart';
+import 'package:netclick/routes/sign_up_route.dart';
+import 'package:netclick/routes/watch_route.dart';
+import 'package:redux/redux.dart';
+
 import 'package:netclick/routes/login_route.dart';
 
-void main() => runApp(MyApp());
+import 'data_providers/shared_prefs_auth_data_provider.dart';
+
+enum Actions { UpdateToken }
+
+// The reducer, which takes the previous count and increments it in response
+// to an Increment action.
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPrefsAuthDataProvider.load();
+  final store = new Store<AppState>(appStateReducer,
+      initialState: AppState(token: SharedPrefsAuthDataProvider.getToken()));
+  runApp(StoreProvider<AppState>(store: store, child: MyApp()));
+}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    String token = StoreProvider.of<AppState>(context).state.token;
+    String initialPage = (token == null || token == '') ? '/login' : '/';
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+        appBarTheme: AppBarTheme(
+          color: Colors.grey[850],
+        ),
+        backgroundColor: Colors.grey[850],
+        brightness: Brightness.dark,
+        hintColor: Colors.grey[400],
+        focusColor: Colors.grey[400],
+        inputDecorationTheme: InputDecorationTheme(
+            focusColor: Colors.grey[400],
+            labelStyle: TextStyle(
+              color: Colors.white,
+            ),
+            border: InputBorder.none,
+            focusedBorder: InputBorder.none),
       ),
-      initialRoute: '/',
+      initialRoute: initialPage,
       routes: {
-        '/': (context) => LoginRoute(),
+        '/': (context) => HomePage(),
+        '/login': (context) => LoginRoute(),
+        '/sign-up': (context) => SignUpRoute(),
+        '/watch': (context) => WatchRoute(),
       },
+      // home: LoginRoute());
     );
   }
 }
 
+class LoginInfo extends InheritedWidget {
+  LoginInfo({Widget child}) : super(child: child);
 
-class LoginInfo extends InheritedWidget{
-
-  LoginInfo({Widget child}): super(child: child);
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {
-    // TODO: implement updateShouldNotify
     return null;
   }
-
 }

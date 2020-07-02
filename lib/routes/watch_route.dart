@@ -47,7 +47,7 @@ class WatchRouteState extends State<WatchRoute> {
     _episode =
         await EpisodeRepository.getEpInfo(epId: widget.episode.epId.toString());
     _controller = VideoPlayerController.network(
-        Uri.http(baseUrl, 'movies/${_episode.uri}.mp4').toString());
+        Uri.http(baseUrl, '/episode/watch/${_episode.epId}').toString());
     await _controller.initialize();
     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
     setState(() {});

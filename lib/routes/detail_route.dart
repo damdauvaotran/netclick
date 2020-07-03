@@ -56,15 +56,17 @@ class _DetailsRouteState extends State<DetailsRoute> {
   _onLikeMovie(FilmDetail filmDetail) async {
     try {
       print(filmDetail.liked);
-      if (filmDetail.liked) {
+      if (_filmDetail.liked) {
         await FilmRepository.removeFromFavorite(
             filmId: filmDetail.filmId.toString());
+        print('remove');
       } else {
         await FilmRepository.addToFavorite(
             filmId: filmDetail.filmId.toString());
       }
+
       setState(() {
-        _filmDetail.liked = !filmDetail.liked;
+        _filmDetail.liked = !_filmDetail.liked;
       });
     } catch (e) {} finally {
 //      await _fetchFilmDetail();

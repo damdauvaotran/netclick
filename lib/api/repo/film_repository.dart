@@ -22,7 +22,8 @@ class FilmRepository {
   }
 
   static Future removeFromFavorite({@required String filmId}) async {
-    Map<String, dynamic> data =
+    print(filmId);
+    var data =
         await postAuth(url: '/list/favorite/remove', body: {'filmId': filmId});
     return data;
   }
